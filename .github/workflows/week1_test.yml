@@ -1,0 +1,29 @@
+name: Week 1 Autograder (Memory Architecture)
+
+# Since your Notion instructions ask them to push directly to main for Week 1, 
+# this trigger will run the test every time they push to main.
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v3
+
+    - name: Install CMake & Compiler
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++
+
+    - name: Compile Engine
+      run: |
+        cmake -S . -B build
+        cmake --build build
+
+    - name: Run Grid Output Test
+      run: ./build/PhysarumEngine
