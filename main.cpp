@@ -2,8 +2,8 @@
 #include <cstdint>
 
 // Define constant height and width for the simulation space
-const int WIDTH = 1024;
-const int HEIGHT = 1024;
+const int WIDTH = 16;
+const int HEIGHT = 16;
 
 // This function checks whether the given coordinates (x, y) lie within the simulation bounds
 bool validCoordinates(int x, int y)
@@ -49,15 +49,18 @@ int main()
 
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            if (x == y) {
+            if (x >=4 && x<=11 && y>=4 && y<=11) {
                 setTrail(trailGrid, x, y, 1.0f);
             }
         }
     }
 
-    // Verify the math worked
-    std::cout << "Trail at (500, 500): " << getTrail(trailGrid, 500, 500) << std::endl; // Should be 1
-    std::cout << "Trail at (500, 501): " << getTrail(trailGrid, 500, 501) << std::endl; // Should be 0
+    for(int y=0;y<HEIGHT;++y){
+        for(int x=0;x<WIDTH;++x){
+            std::cout<<getTrail(trailGrid,x,y)<<" ";
+        }
+        std::cout<<std::endl;
+    }
 
     // Free the Heap memory to prevent leaks
     delete[] stateGrid;
