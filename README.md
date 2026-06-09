@@ -3,5 +3,8 @@
 **Task 1 Output**
 
 ![Task-1](Screenshots/Task-1.png)
+
+**Task 2 Output**
 <img width="400" height="400" alt="Task-2_2" src="https://github.com/user-attachments/assets/927965f0-a2c2-4984-b1e8-833a190266eb" />
+
 <img width="400" height="225" alt="Task-2" src="https://github.com/user-attachments/assets/64e7f540-e970-489b-b882-6ec644edf5ab" />
