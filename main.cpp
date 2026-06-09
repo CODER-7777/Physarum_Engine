@@ -1,71 +1,87 @@
-#include <iostream>
-#include <cstdint>
+#include<iostream>
+#include<vector>
+#include<cmath>
+#include<random>
+#include"Engine.hpp"
 
-// Define constant height and width for the simulation space
-const int WIDTH = 16;
-const int HEIGHT = 16;
+const int WIDTH=1024;
+const int HEIGHT=1024;
+const int NUM_AGENTS=10000;
+using namespace std;
+struct Agent{
+    float x,y;
+    float vx,vy;
+    float ax,ay;
+};
 
-// This function checks whether the given coordinates (x, y) lie within the simulation bounds
-bool validCoordinates(int x, int y)
-{
-    return (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT);
-}
-
-// 2D to 1D : updates the value for the flattened grid
-void setTrail(float *grid, int x, int y, float value)
-{
-    // Check bounds so you do not access invalid memory locations
-    if (validCoordinates(x, y))
-    {
-        grid[y * WIDTH + x] = value;
+void setTrail(float *grid,int x,int y,float value){
+    if(x>=0 && x<WIDTH && y>=0 && y<HEIGHT){
+        grid[y*WIDTH+x] =value;
     }
-}
+};
 
-// 2D to 1D : returns the value of trail at coordinate (x, y) if they are within the bounds, otherwise returns 0.0f.
-float getTrail(const float *grid, int x, int y)
-{
-    if (validCoordinates(x, y))
-    {
-        return grid[y * WIDTH + x];
+int main(){
+    RenderEngine engine(WIDTH,HEIGHT);
+    if(!engine.init()){
+        cerr<<"Failed to initialize engine!"<<endl;
+        return -1;
     }
-    else
-    {
-        return 0.0f;
-    }
-}
-
-int main()
-{
-    std::cout << "Initializing Memory for Physarum Engine..." << std::endl;
-
-    // The State Grid : Grid(i, j) = 0 for Air, 1 for Wall, 2 for Food
-    // The Trail Grid : Each grid point stores the floating point value of the pheromone trail.
-    uint8_t* stateGrid = new uint8_t[WIDTH * HEIGHT]();
-    float* trailGrid = new float[WIDTH * HEIGHT]();
-
-    std::cout << "Memory Allocated Successfully" << std::endl;
-
-    // Sandbox Experiment
-
-    for (int y = 0; y < HEIGHT; ++y) {
-        for (int x = 0; x < WIDTH; ++x) {
-            if (x >=4 && x<=11 && y>=4 && y<=11) {
-                setTrail(trailGrid, x, y, 1.0f);
-            }
+    float *trailGrid =new float[WIDTH*HEIGHT]();
+    Agent *agents=new Agent[NUM_AGENTS];
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<float>  disPos(0.0f,static_cast<float>(WIDTH));
+    uniform_real_distribution<float> disDir(0.0f,1.0f);
+    float speed=2.0f;
+    float centerX= WIDTH/2.0f;
+    float centerY=HEIGHT/2.0f;
+    for(int i=0;i<NUM_AGENTS;i++){
+        agents[i].x=disPos(gen);
+        agents[i].y=disPos(gen);
+        float dx=agents[i].x-centerX;
+        float dy=agents[i].y-centerY;
+        float dist = sqrt(dx*dx+dy*dy);
+        //float angle=atan2(dy,dx);
+        if(dist ==0) dist=0.001f;
+        float tangentX=-dy/dist;
+        float tangentY=dx/dist;
+        if(disDir(gen) >0.5f){
+            tangentX=-tangentX;
+            tangentY= -tangentY;
         }
+        agents[i].vx=tangentX*speed;
+        agents[i].vy=tangentY*speed;
     }
-
-    for(int y=0;y<HEIGHT;++y){
-        for(int x=0;x<WIDTH;++x){
-            std::cout<<getTrail(trailGrid,x,y)<<" ";
+    while(!engine.shouldClose()){
+        fill(trailGrid,trailGrid+WIDTH*HEIGHT, 0.0f);
+        for(int i=0;i<NUM_AGENTS;++i){
+           float dx=centerX-agents[i].x;
+           float dy=centerY-agents[i].y;
+           float dist =sqrt(dx*dx+dy*dy);
+           if(dist >0.001f){
+            float pullStrength =(speed*speed)/dist;
+            agents[i].ax=(dx/dist)*pullStrength;
+            agents[i].ay=(dy/dist)*pullStrength;
+           }
+           agents[i].vx +=agents[i].ax;
+           agents[i].vy+=agents[i].ay;
+           float currentSpeed=sqrt(agents[i].vx*agents[i].vx+agents[i].vy*agents[i].vy);
+           agents[i].vx=(agents[i].vx/currentSpeed)*speed;
+           agents[i].vy=(agents[i].vy/currentSpeed)*speed;
+           agents[i].x += agents[i].vx;
+           agents[i].y += agents[i].vy;
+           if(agents[i].x<0) agents[i].x +=WIDTH;
+           if(agents[i].x>WIDTH) agents[i].x -=WIDTH;
+           if(agents[i].y <0) agents[i].y+=HEIGHT;
+           if(agents[i].y>HEIGHT) agents[i].y -=HEIGHT;
+           int gridX = static_cast<int>(agents[i].x);
+           int gridY = static_cast<int>(agents[i].y);
+           setTrail(trailGrid,gridX,gridY,1.0f);       
         }
-        std::cout<<std::endl;
+        engine.renderFrame(trailGrid);
     }
-
-    // Free the Heap memory to prevent leaks
-    delete[] stateGrid;
     delete[] trailGrid;
-    
-    std::cout << "Memory freed. Engine shutdown." << std::endl;
+    delete[] agents;
+    engine.shutdown();
     return 0;
 }
