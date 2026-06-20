@@ -71,8 +71,6 @@ struct Agent {
                 angle -= turnAngle;
             }
         }
-        agents[i].vx=tangentX*speed;
-        agents[i].vy=tangentY*speed;
     }
 };
 
