@@ -31,9 +31,9 @@ struct Agent
     bool hasFood = false;
     
     // Reinforcement Hyperparameters
-    float baseDeposit = 0.1f;
+    float baseDeposit = 0.5f;
     float currentDeposit = 1.0f;
-    float depositDecay = 0.99f;
+    float depositDecay = 0.995f;
     float pheromoneBoost = 100.0f;
 
     // Sensing Specifications. You need to modify these in order to change the simulation behaviour.

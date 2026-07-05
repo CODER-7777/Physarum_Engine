@@ -13,7 +13,7 @@ const int NUM_AGENTS = 10000;
 const float PI = 3.14159265359f;
 const float REPULSION = -10.0f;
 const float MAX_SPEED = 2.0f;
-const float DECAY_FACTOR = 0.998f; // Increased so Red trails survive longer!
+const float DECAY_FACTOR = 0.999f; // Increased even further to keep trails alive!
 
 using namespace std;
 
@@ -57,13 +57,13 @@ int main(int argc, char** argv) {
     
     int HomeX = WIDTH / 2;
     int HomeY = HEIGHT / 2;
-    int HomeRadius = 15;
+    int HomeRadius = 30;
 
     // Draw 4 Food Targets in the corners, and 1 Home Base in the center
-    addZone(terrainGrid, 50, 50, 15, FOOD);
-    addZone(terrainGrid, 50, HEIGHT - 50, 15, FOOD);
-    addZone(terrainGrid, WIDTH - 50, 50, 15, FOOD);
-    addZone(terrainGrid, WIDTH - 50, HEIGHT - 50, 15, FOOD);
+    addZone(terrainGrid, 50, 50, 30, FOOD);
+    addZone(terrainGrid, 50, HEIGHT - 50, 30, FOOD);
+    addZone(terrainGrid, WIDTH - 50, 50, 30, FOOD);
+    addZone(terrainGrid, WIDTH - 50, HEIGHT - 50, 30, FOOD);
     addZone(terrainGrid, HomeX, HomeY, HomeRadius, HOME);
 
     // RGB Grids (3 channels)
