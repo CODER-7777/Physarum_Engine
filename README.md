@@ -86,6 +86,9 @@ cd build
 ./PhysarumEngine ../obstacle.png
 ```
 
+## Author
+- **Mansoju Vivekananda** (Roll No: 240628)
+
 ## Project Mentors
 This project was built under the guidance of the ACA, IIT Kanpur mentorship team:
 - **Aman Srivastava**
