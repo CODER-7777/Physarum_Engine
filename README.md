@@ -8,3 +8,7 @@
 <img width="400" height="400" alt="Task-2_2" src="https://github.com/user-attachments/assets/927965f0-a2c2-4984-b1e8-833a190266eb" />
 
 <img width="400" height="225" alt="Task-2" src="https://github.com/user-attachments/assets/64e7f540-e970-489b-b882-6ec644edf5ab" />
+
+**Week 4 Showcase Video**
+
+[Watch the Intelligent Swarm find the Yellow Highways here!](https://drive.google.com/file/d/1MbVc28mqKWlpI2RFb8xDIh0Dt_WBjjKU/view?usp=sharing)

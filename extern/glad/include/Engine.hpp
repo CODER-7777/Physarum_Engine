@@ -23,8 +23,8 @@ out vec4 FragColor;
 in vec2 TexCoords;
 uniform sampler2D tex;
 void main() {
-    float val = texture(tex, TexCoords).r;
-    FragColor = vec4(val, val, val, 1.0);
+    vec3 color = texture(tex, TexCoords).rgb;
+    FragColor = vec4(color, 1.0);
 }
 )";
 
@@ -118,7 +118,7 @@ public:
         
         // Blast the 1D Array to the Texture
         glBindTexture(GL_TEXTURE_2D, textureID);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, width, height, 0, GL_RED, GL_FLOAT, trailGrid);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_FLOAT, trailGrid);
 
         // Draw the Quad
         glBindVertexArray(VAO);
