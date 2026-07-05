@@ -13,7 +13,7 @@ const int NUM_AGENTS = 10000;
 const float PI = 3.14159265359f;
 const float REPULSION = -10.0f;
 const float MAX_SPEED = 2.0f;
-const float DECAY_FACTOR = 0.99f;
+const float DECAY_FACTOR = 0.998f; // Increased so Red trails survive longer!
 
 using namespace std;
 
