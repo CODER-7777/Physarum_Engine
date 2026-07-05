@@ -28,27 +28,27 @@ The **Physarum Engine** is a high-performance C++/OpenGL simulation that transla
 
 The engine was developed systematically over an 8-week structured curriculum:
 
-### Week 1: Core Systems & Memory Management
+### Week 1: Core Systems & Memory Management `[`[View Code](./CMakeLists.txt)`]`
 - Initialized the C++ CMake build environment and configured library linkages (OpenGL, GLFW).
 - Designed foundational utility structures and established strict, efficient memory management protocols for high-performance execution.
 
-### Week 2: Naive Swarm Mechanics
+### Week 2: Naive Swarm Mechanics `[`[View Code](./extern/glad/include/Engine.hpp)`]`
 - Architected the `Agent` struct encapsulating position, velocity, and trajectory vectors.
 - Implemented the primary render loop to smoothly simulate and render 10,000 independent agents across the discrete grid domain.
 
-### Week 3: Stigmergy & Chemotaxis
+### Week 3: Stigmergy & Chemotaxis `[`[View Code](./include/Agent.hpp)`]`
 - Engineered the core biological feedback loop. Agents deposit pheromone trails into a globally shared environment grid.
 - Implemented discrete, multi-sensor raycasting enabling agents to sample pheromone gradients and adjust their steering dynamically.
 
-### Week 4: Diffusion & Double Buffering
+### Week 4: Diffusion & Double Buffering `[`[View Code](./main.cpp)`]`
 - Integrated a zero-allocation double-buffered state machine to eliminate simulation tearing and race conditions.
 - Applied a 3x3 convolution blur matrix and temporal decay factors to the memory grid, simulating the natural diffusion and evaporation of chemoattractants over time.
 
-### Week 5: Environmental Mapping
+### Week 5: Environmental Mapping `[`[View Code](./include/ImageMapper.hpp)`]`
 - Integrated the `stb_image.h` library to ingest complex black-and-white `.png` topologies (e.g., city layouts, mazes).
 - Implemented physics collision boundaries and boundary-avoidance steering logic.
 
-### Week 6: Reinforcement & Multi-Channel Routing
+### Week 6: Reinforcement & Multi-Channel Routing `[`[View Code](./include/Agent.hpp)`]`
 - Introduced goal nodes (Food) and multi-channel RGB pheromone states.
 - Applied Temporal Difference (TD) learning logic where agents flip states upon reaching goals, leaving massive reinforcement trails to optimize multi-source routing.
 
