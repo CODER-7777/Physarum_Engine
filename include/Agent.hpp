@@ -87,12 +87,6 @@ struct Agent
             angle += turnAngle;
         else if (RightSensorValue > LeftSensorValue)
             angle -= turnAngle;
-        else {
-            if (rand() % 2 == 0)
-                angle += turnAngle;
-            else
-                angle -= turnAngle;
-        }
     }
 
     
