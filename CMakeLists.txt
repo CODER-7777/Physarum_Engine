@@ -13,5 +13,6 @@ find_package(glfw3 REQUIRED)
 add_executable(PhysarumEngine main.cpp extern/glad/src/glad.c)
 target_include_directories(PhysarumEngine PRIVATE
         ${CMAKE_SOURCE_DIR}/extern/glad/include        
+        ${CMAKE_SOURCE_DIR}/include
 )
 target_link_libraries(PhysarumEngine PRIVATE OpenGL::GL glfw)
